@@ -1,13 +1,23 @@
 import React from 'react'
-import { act } from 'react-dom/cjs/react-dom-test-utils.production.min'
 import MessageForm from './MessageForm'
 import MyMessage from './MyMessage'
-import ThierMessage from './ThierMessage'
+import ThierMessage from './TheirMessage'
 
 const ChatFeed = (props) => {
    const {chats,activeChat,userName,messages} =props;
    const currentChat = chats && chats[activeChat] 
    
+   const renderReadReceipts = (message, isMyMessage) => currentChat.people.map((person, index) => person.last_read === message.id && (
+    <div
+      key={`read_${index}`}
+      className="read-receipt"
+      style={{
+        float: isMyMessage ? 'right' : 'left',
+        backgroundImage: person.person.avatar && `url(${person.person.avatar})`,
+      }}
+    />
+  ));
+
    const renderMessages=()=>{
    const keys=Object.keys(messages);
     
@@ -26,7 +36,7 @@ const ChatFeed = (props) => {
         }
          </div>   
          <div className="read-receipts" style={{ marginRight: isMyMessage ? '18px' : '0px' , marginLeft: isMyMessage? '0px':'68px'}}>
-         receipts
+         {renderReadReceipts(message, isMyMessage)}
          </div>   
         </div>
     )
