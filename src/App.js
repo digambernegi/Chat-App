@@ -5,7 +5,7 @@ import LoginForm from './LoginForm';
 
 
 function App() {
-  if(!localStorage.getItem('username')) return <LoginForm/> //if username in available LC then open login component
+  if(!localStorage.getItem('username')) return <LoginForm/>; //if username in available LC then open login component
   return (
       <ChatEngine
 		  height="100vh"
